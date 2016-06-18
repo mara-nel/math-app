@@ -11,9 +11,7 @@ import android.graphics.Paint;
  */
 public class Draw {
 
-    public void Draw() {
-
-    }
+    public void Draw() {}
 
 
     public void displayText(Canvas canvas, String text, int xCoord, int yCoord) {

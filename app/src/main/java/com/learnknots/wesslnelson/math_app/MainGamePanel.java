@@ -17,6 +17,7 @@ import com.learnknots.wesslnelson.math_app.screens.PuzzleScreen;
 public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback{
 
     private static final String TAG = MainGamePanel.class.getSimpleName();
+    private static final int PUZZLE_STATE = 1;
 
     private MainThread thread;
 
@@ -27,6 +28,8 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
     }
 
     private PuzzleScreen puzzleScreen;
+    private int GAME_STATE;
+
 
     public MainGamePanel(Context context) {
         super(context);
@@ -40,7 +43,7 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
         // make the GamePanel focusable so it can handle events
         setFocusable(true);
 
-
+        GAME_STATE = 1;
         puzzleScreen = new PuzzleScreen();
     }
 
@@ -71,6 +74,10 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        if (GAME_STATE == PUZZLE_STATE) {
+            puzzleScreen.onTouchEvent(event);
+        }
+
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             // check if in lower part of screen to see if exit
             if (event.getY() > getHeight() - 50) {
@@ -79,6 +86,7 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
             } else {
                 Log.d(TAG, "Coords: x=" + event.getX() + ",y=" + event.getY());
             }
+
         }
         if (event.getAction() == MotionEvent.ACTION_MOVE) {
             // the gestures
@@ -100,5 +108,10 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
 
     }
 
+
+    public void endIt() {
+        thread.setRunning(false);
+        ((Activity) getContext()).finish();
+    }
 
 }
