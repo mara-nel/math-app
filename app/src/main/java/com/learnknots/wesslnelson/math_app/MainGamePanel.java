@@ -9,6 +9,8 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.learnknots.wesslnelson.math_app.screens.PuzzleScreen;
+
 /**
  * Created by wesslnelson on 6/15/16.
  */
@@ -24,6 +26,8 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
         this.avgFps = avgFps;
     }
 
+    private PuzzleScreen puzzleScreen;
+
     public MainGamePanel(Context context) {
         super(context);
         // adding the callback (this) to the surface holder to intercept events
@@ -35,6 +39,9 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
 
         // make the GamePanel focusable so it can handle events
         setFocusable(true);
+
+
+        puzzleScreen = new PuzzleScreen();
     }
 
     @Override
@@ -85,6 +92,7 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
 
     public void render(Canvas canvas) {
         canvas.drawColor(Color.BLACK);
+        puzzleScreen.render(canvas);
 
     }
 
