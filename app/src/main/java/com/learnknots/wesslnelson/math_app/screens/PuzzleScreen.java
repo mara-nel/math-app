@@ -18,16 +18,20 @@ public class PuzzleScreen {
 
     private Draw draw;
     private Coin firstCoin;
+    private Die  firstDie;
 
     public PuzzleScreen() {
 
         draw = new Draw();
-        firstCoin = new Coin(300,300,60);
+        firstCoin = new Coin(300,300,60, "+");
+        firstDie  = new Die( 300,100,60, 5);
     }
 
     public void render(Canvas canvas) {
-        draw.displayText(canvas, "testing", 100, 100);
+        draw.displayText(canvas, "testing", 100, 100, 100);
         firstCoin.render(canvas);
+        firstDie.render(canvas);
+
     }
 
 
@@ -35,17 +39,25 @@ public class PuzzleScreen {
     public void onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             firstCoin.handleActionDown((int) event.getX(), (int) event.getY());
+            firstDie.handleActionDown((int) event.getX(), (int) event.getY());
             Log.d(TAG, String.valueOf(firstCoin.isTouched()));
         }
         if (event.getAction() == MotionEvent.ACTION_MOVE) {
             if(firstCoin.isTouched()) {
                 firstCoin.setCenterCoord((int)event.getX(), (int)event.getY());
             }
+            if(firstDie.isTouched()) {
+                firstDie.setX((int)event.getX());
+                firstDie.setY((int)event.getY());
+            }
 
         } if (event.getAction() == MotionEvent.ACTION_UP) {
             // touch was released
             if (firstCoin.isTouched()) {
                 firstCoin.setTouched(false);
+            }
+            if (firstDie.isTouched()) {
+                firstDie.setTouched(false);
             }
 
         }

@@ -3,6 +3,8 @@ package com.learnknots.wesslnelson.math_app.model;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import com.learnknots.wesslnelson.math_app.Draw;
+
 /**
  * Created by wesslnelson on 6/18/16.
  */
@@ -11,15 +13,19 @@ public class Coin extends Draggable {
     private int cx;     // x coord of the center of coin
     private int cy;     // y coord of the center of coin
 
+    private Draw draw;  // used for handy drawing functions
 
-    public Coin(int x, int y, int width) {
+    public Coin(int x, int y, int width, String operation) {
 
         setX(x);
         setY(y);
         setHeight(width);
         setWidth(width);
+        setMessage(operation);
         this.cx = x+width/2;
         this.cy = y+width/2;
+
+        draw  = new Draw();
 
     }
 
@@ -44,6 +50,7 @@ public class Coin extends Draggable {
             paint.setStyle(Paint.Style.STROKE);
 
             canvas.drawCircle(cx,cy,getWidth()/2, paint);
+            draw.displayText(canvas, getMessage(),getX()+15 ,getY()-10+getHeight(),getWidth()-30);
         }
     }
 

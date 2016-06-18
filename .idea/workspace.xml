@@ -10,9 +10,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1112a5b8-6470-42b2-886e-203dcb3f7c4b" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/model/Coin.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/model/Die.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/model/Draggable.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/cache.properties.lock" afterPath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/cache.properties.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/fileHashes.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/fileSnapshots.bin" />
@@ -20,11 +17,13 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" afterPath="$PROJECT_DIR$/.gradle/2.10/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" afterPath="$PROJECT_DIR$/.gradle/2.10/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" afterPath="$PROJECT_DIR$/.gradle/2.10/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/Draw.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/Draw.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/MainActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/MainGamePanel.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/MainGamePanel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/model/Coin.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/model/Coin.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/model/Die.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/model/Die.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/model/Draggable.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/model/Draggable.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/model/textButton.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/model/textButton.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/screens/PuzzleScreen.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/screens/PuzzleScreen.java" />
     </list>
     <ignored path="math-app.iws" />
@@ -72,7 +71,7 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/MainGamePanel.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="18" column="27" selection-start-line="18" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+              <caret line="101" column="37" selection-start-line="101" selection-start-column="37" selection-end-line="101" selection-end-column="37" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -80,11 +79,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Draggable.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Draggable.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/model/Draggable.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.44078946">
-              <caret line="75" column="4" selection-start-line="75" selection-start-column="4" selection-end-line="75" selection-end-column="4" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="40" column="27" selection-start-line="40" selection-start-column="27" selection-end-line="40" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -94,7 +93,19 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/model/Die.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="5" column="16" selection-start-line="5" selection-start-column="16" selection-end-line="5" selection-end-column="16" />
+              <caret line="31" column="32" selection-start-line="31" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Draw.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/Draw.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.8355263">
+              <caret line="36" column="7" selection-start-line="36" selection-start-column="7" selection-end-line="36" selection-end-column="7" />
               <folding />
             </state>
           </provider>
@@ -104,7 +115,7 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/model/Coin.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="48" column="0" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
+              <caret line="52" column="59" selection-start-line="52" selection-start-column="59" selection-end-line="52" selection-end-column="59" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -116,7 +127,7 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/screens/PuzzleScreen.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+              <caret line="25" column="43" selection-start-line="25" selection-start-column="43" selection-end-line="25" selection-end-column="43" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -1781,14 +1792,14 @@
       <list>
         <option value="$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/MainThread.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/model/textButton.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/model/Die.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/MainActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/Draw.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/MainGamePanel.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/model/TextButton.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/model/Coin.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/model/Die.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/MainGamePanel.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/screens/PuzzleScreen.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/model/Coin.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/model/Draggable.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/Draw.java" />
       </list>
     </option>
   </component>
@@ -2335,36 +2346,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/model/Die.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="16" selection-start-line="5" selection-start-column="16" selection-end-line="5" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/MainThread.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-1.7434211">
           <caret line="18" column="36" selection-start-line="18" selection-start-column="36" selection-end-line="18" selection-end-column="36" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/Draw.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.2171053">
-          <caret line="47" column="9" selection-start-line="42" selection-start-column="8" selection-end-line="47" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/model/TextButton.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.35064936">
-          <caret line="49" column="1" selection-start-line="49" selection-start-column="1" selection-end-line="49" selection-end-column="24" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -2379,10 +2364,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/model/Coin.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/model/TextButton.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="48" column="0" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
+          <caret line="90" column="95" selection-start-line="90" selection-start-column="95" selection-end-line="90" selection-end-column="95" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -2392,7 +2377,7 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/MainGamePanel.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="18" column="27" selection-start-line="18" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+          <caret line="101" column="37" selection-start-line="101" selection-start-column="37" selection-end-line="101" selection-end-column="37" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -2402,7 +2387,27 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/screens/PuzzleScreen.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+          <caret line="25" column="43" selection-start-line="25" selection-start-column="43" selection-end-line="25" selection-end-column="43" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/model/Die.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="31" column="32" selection-start-line="31" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/model/Coin.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="52" column="59" selection-start-line="52" selection-start-column="59" selection-end-line="52" selection-end-column="59" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -2411,8 +2416,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/model/Draggable.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.44078946">
-          <caret line="75" column="4" selection-start-line="75" selection-start-column="4" selection-end-line="75" selection-end-column="4" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="40" column="27" selection-start-line="40" selection-start-column="27" selection-end-line="40" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/learnknots/wesslnelson/math_app/Draw.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8355263">
+          <caret line="36" column="7" selection-start-line="36" selection-start-column="7" selection-end-line="36" selection-end-column="7" />
           <folding />
         </state>
       </provider>

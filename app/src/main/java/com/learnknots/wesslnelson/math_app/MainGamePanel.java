@@ -99,7 +99,7 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
     }
 
     public void render(Canvas canvas) {
-        canvas.drawColor(Color.BLACK);
+        canvas.drawColor(Color.DKGRAY);
         puzzleScreen.render(canvas);
 
     }

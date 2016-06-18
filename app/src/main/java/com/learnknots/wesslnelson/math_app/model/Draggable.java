@@ -14,10 +14,11 @@ public class Draggable {
 
     private static final String TAG = Draggable.class.getSimpleName();
 
-    private int x;
-    private int y;
-    private int width;
-    private int height;
+    private int x;          // x coord of the top left corner
+    private int y;          // y coord of the top left corner
+    private int width;      // width of the draggable object
+    private int height;     // height of the draggable object
+    private String message; // message, what is often displayed inside drawn object
 
     private boolean touched; // true if the draggable is touched/picked up
 
@@ -37,6 +38,7 @@ public class Draggable {
         this.y = 0;
         this.width = 0;
         this.height = 0;
+        this.message = null;
     }
 
     public void setX(int x) {
@@ -73,10 +75,15 @@ public class Draggable {
     public void setTouched(boolean touched) {
         this.touched = touched;
     }
-    
+
+    public String getMessage() {
+        return message;
+    }
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     public void handleActionDown(int eventX, int eventY) {
-        Log.d(TAG, "what's goin on?");
         if (eventY >= (y) && (eventY <= (y + height))) {
             if (eventX >= (x) && (eventX <= (x + width))) {
                 // draggable touched
