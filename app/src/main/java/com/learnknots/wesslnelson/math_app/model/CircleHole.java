@@ -29,5 +29,29 @@ public class CircleHole extends Hole {
     }
 
 
+    // if the hole is empty and
+    // if the die is overlapping with this hole
+    // the die gets snapped into place and hole gets filled
+    public void snapIfClose(Coin coin) {
+        if (isEmpty()) {
+            if (coinOverlaps(coin)) {
+                coin.setCenterCoord(getCenterX(), getCenterY());
+                setEmpty(false);
+                setContainedMessage(coin.getMessage());
+            }
+        }
+
+    }
+
+    // returns true if the center of the die is within the hole
+    public boolean coinOverlaps(Coin coin) {
+        if (coin.getCx() > getX() && coin.getCx() < (getX()+getWidth()) ) {
+            if (coin.getCy() > getY() && coin.getCy() < (getY()+getHeight()) ) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
 }

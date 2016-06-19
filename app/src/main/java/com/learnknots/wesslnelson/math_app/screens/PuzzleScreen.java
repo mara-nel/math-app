@@ -70,6 +70,10 @@ public class PuzzleScreen {
         if (event.getAction() == MotionEvent.ACTION_MOVE) {
             if(firstCoin.isTouched()) {
                 firstCoin.setCenterCoord((int)event.getX(), (int)event.getY());
+                if (!firstCHole.coinOverlaps(firstCoin)) {
+                    firstCHole.setEmpty(true);
+                    firstCHole.setContainedMessage(null);
+                }
             }
             if(firstDie.isTouched()) {
                 firstDie.setCenter((int)event.getX(), (int)event.getY());
@@ -83,6 +87,7 @@ public class PuzzleScreen {
             // touch was released
             if (firstCoin.isTouched()) {
                 firstCoin.setTouched(false);
+                firstCHole.snapIfClose(firstCoin);
             }
             if (firstDie.isTouched()) {
                 firstDie.setTouched(false);

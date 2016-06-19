@@ -32,8 +32,16 @@ public class Coin extends Draggable {
     public void setCX(int x){
         this.cx = x;
     }
+    public int getCx() {
+        return cx;
+    }
+
+
     public void setCY(int y){
         this.cy = y;
+    }
+    public int getCy() {
+        return cy;
     }
 
     public void setCenterCoord(int cx, int cy) {
