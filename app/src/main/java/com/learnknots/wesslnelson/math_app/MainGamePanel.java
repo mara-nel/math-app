@@ -44,7 +44,7 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
         setFocusable(true);
 
         GAME_STATE = 1;
-        puzzleScreen = new PuzzleScreen();
+        puzzleScreen = new PuzzleScreen(getContext());
     }
 
     @Override

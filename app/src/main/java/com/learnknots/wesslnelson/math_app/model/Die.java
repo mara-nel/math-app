@@ -1,7 +1,9 @@
 package com.learnknots.wesslnelson.math_app.model;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
 
 import com.learnknots.wesslnelson.math_app.Draw;
 
@@ -11,12 +13,14 @@ import com.learnknots.wesslnelson.math_app.Draw;
 public class Die extends Draggable{
 
     private Draw draw;
+    private Bitmap bitmap;
 
-    public Die(int x, int y, int width, int number) {
+    public Die(Bitmap bitmap, int x, int y, int number) {
+        this.bitmap = bitmap;
         setX(x);
         setY(y);
-        setWidth(width);
-        setHeight(width);
+        setWidth(bitmap.getWidth());
+        setHeight(bitmap.getHeight());
         setMessage(Integer.toString(number));
 
         draw = new Draw();
@@ -25,11 +29,16 @@ public class Die extends Draggable{
 
     public void render(Canvas canvas) {
         if (canvas != null) {
+            /*
             Paint paint = new Paint();
             paint.setARGB(255, 255, 255, 255);
             paint.setStyle(Paint.Style.STROKE);
             canvas.drawRect(getX(),getY(),getX() +getWidth(),getY()+getHeight(), paint);
             draw.displayText(canvas, getMessage(),getX()+10 ,getY()-10+getHeight(),getWidth()-30);
+            */
+            Rect sourceRect = new Rect(0, 0, getWidth(), getHeight());
+            Rect destRect = new Rect(getX(), getY(), getX() + getWidth(), getY() + getWidth());
+            canvas.drawBitmap(bitmap, sourceRect, destRect, null);
 
         }
     }

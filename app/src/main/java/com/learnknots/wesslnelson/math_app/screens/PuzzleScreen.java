@@ -1,13 +1,17 @@
 package com.learnknots.wesslnelson.math_app.screens;
 
 import android.app.Activity;
+import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.util.Log;
 import android.view.MotionEvent;
 
 import com.learnknots.wesslnelson.math_app.Draw;
+import com.learnknots.wesslnelson.math_app.R;
 import com.learnknots.wesslnelson.math_app.model.Coin;
 import com.learnknots.wesslnelson.math_app.model.Die;
+import com.learnknots.wesslnelson.math_app.model.SquareHole;
 
 /**
  * Created by wesslnelson on 6/18/16.
@@ -19,16 +23,22 @@ public class PuzzleScreen {
     private Draw draw;
     private Coin firstCoin;
     private Die  firstDie;
+    private SquareHole firstSHole;
 
-    public PuzzleScreen() {
+    public PuzzleScreen( Context context) {
 
         draw = new Draw();
         firstCoin = new Coin(300,300,60, "+");
-        firstDie  = new Die( 300,100,60, 5);
+        firstDie  = new Die( BitmapFactory.decodeResource(context.getResources(),
+                R.drawable.die_1), 300,100, 1);
+        firstSHole = new SquareHole( BitmapFactory.decodeResource(context.getResources(),
+                R.drawable.square_hole64), 300, 400);
     }
 
     public void render(Canvas canvas) {
         draw.displayText(canvas, "testing", 100, 100, 100);
+        firstSHole.render(canvas); // draw holes first, otherwise dice would be under the hole
+
         firstCoin.render(canvas);
         firstDie.render(canvas);
 
