@@ -50,7 +50,7 @@ public class Coin extends Draggable {
             paint.setStyle(Paint.Style.STROKE);
 
             canvas.drawCircle(cx,cy,getWidth()/2, paint);
-            draw.displayText(canvas, getMessage(),getX()+15 ,getY()-10+getHeight(),getWidth()-30);
+            draw.displayTextCentered(canvas, getMessage(), cx, cy, getWidth()-20);
         }
     }
 

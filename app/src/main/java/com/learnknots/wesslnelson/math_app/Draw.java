@@ -24,17 +24,18 @@ public class Draw {
         }
     }
 
-    /*
+
     // draws text but using the center x and center y coord
     public void displayTextCentered(Canvas canvas, String text, int cx, int cy, int desWidth) {
         if (canvas != null && text != null) {
             Paint paint = new Paint();
             paint.setARGB(255, 255, 255, 255);
             setTextSizeForWidth(paint, desWidth, text);
-
+            float height = Math.abs(paint.ascent())+Math.abs(paint.descent());
+            canvas.drawText(text, cx - desWidth/2, cy+height/4, paint);
         }
 
-    }*/
+    }
 
     public void drawHLine(Canvas canvas, int yCoord) {
         if (canvas != null) {
