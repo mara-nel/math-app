@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 
 import com.learnknots.wesslnelson.math_app.Draw;
 import com.learnknots.wesslnelson.math_app.R;
+import com.learnknots.wesslnelson.math_app.model.CircleHole;
 import com.learnknots.wesslnelson.math_app.model.Coin;
 import com.learnknots.wesslnelson.math_app.model.Die;
 import com.learnknots.wesslnelson.math_app.model.SquareHole;
@@ -24,6 +25,7 @@ public class PuzzleScreen {
     private Coin firstCoin;
     private Die  firstDie;
     private SquareHole firstSHole;
+    private CircleHole firstCHole;
 
     public PuzzleScreen( Context context) {
 
@@ -32,15 +34,28 @@ public class PuzzleScreen {
         firstDie  = new Die( BitmapFactory.decodeResource(context.getResources(),
                 R.drawable.die_1), 300,100, 1);
         firstSHole = new SquareHole( BitmapFactory.decodeResource(context.getResources(),
-                R.drawable.square_hole64), 300, 400);
+                R.drawable.square_hole64), 100, 500);
+        firstCHole = new CircleHole( BitmapFactory.decodeResource(context.getResources(),
+                R.drawable.circle_hole), 200, 500);
     }
 
     public void render(Canvas canvas) {
-        draw.displayText(canvas, "testing", 100, 100, 100);
+        draw.displayTextbyWidth(canvas, "testing", 100, 100, 100);
         firstSHole.render(canvas); // draw holes first, otherwise dice would be under the hole
+        firstCHole.render(canvas);
+
+
 
         firstCoin.render(canvas);
         firstDie.render(canvas);
+
+        if (firstSHole.hasMessage()) {
+            draw.displayText(canvas, firstSHole.getContainedMessage(), 100, 200);
+        }
+
+    }
+
+    public void update() {
 
     }
 
@@ -57,8 +72,11 @@ public class PuzzleScreen {
                 firstCoin.setCenterCoord((int)event.getX(), (int)event.getY());
             }
             if(firstDie.isTouched()) {
-                firstDie.setX((int)event.getX());
-                firstDie.setY((int)event.getY());
+                firstDie.setCenter((int)event.getX(), (int)event.getY());
+                if (!firstSHole.dieOverlaps(firstDie)) {
+                    firstSHole.setEmpty(true);
+                    firstSHole.setContainedMessage(null);
+                }
             }
 
         } if (event.getAction() == MotionEvent.ACTION_UP) {
@@ -68,6 +86,7 @@ public class PuzzleScreen {
             }
             if (firstDie.isTouched()) {
                 firstDie.setTouched(false);
+                firstSHole.snapIfClose(firstDie);
             }
 
         }

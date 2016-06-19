@@ -26,6 +26,16 @@ public class Die extends Draggable{
         draw = new Draw();
     }
 
+    public void setCenter(int cx, int cy){
+        setX(cx - getWidth()/2);
+        setY(cy - getHeight()/2);
+    }
+    public int getCenterX(){
+        return getX()+getWidth()/2;
+    }
+    public int getCenterY(){
+        return getY()+getHeight()/2;
+    }
 
     public void render(Canvas canvas) {
         if (canvas != null) {

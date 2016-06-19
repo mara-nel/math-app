@@ -29,5 +29,29 @@ public class SquareHole extends Hole {
 
     }
 
+    // if the hole is empty and
+    // if the die is overlapping with this hole
+    // the die gets snapped into place and hole gets filled
+    public void snapIfClose(Die die) {
+        if (isEmpty()) {
+            if (dieOverlaps(die)) {
+                die.setCenter(getCenterX(), getCenterY());
+                setEmpty(false);
+                setContainedMessage(die.getMessage());
+            }
+        }
+
+    }
+
+    // returns true if the center of the die is within the hole
+    public boolean dieOverlaps(Die die) {
+        if (die.getCenterX() > getX() && die.getCenterX() < (getX()+getWidth()) ) {
+            if (die.getCenterY() > getY() && die.getCenterY() < (getY()+getHeight()) ) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
 }

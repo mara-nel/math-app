@@ -88,7 +88,7 @@ public class TextButton {
         // code for drawing lines and text and shit
         draw.drawRectangleOutline(canvas, getX(), getY(), getButtonWidth(), getButtonHeight());
         // dont know how to get length of text, otherwise I could center text much better
-        draw.displayText(canvas, text, getX()+ 50, getY()+getButtonHeight()/2+5, buttonWidth-25);
+        draw.displayTextbyWidth(canvas, text, getX()+ 50, getY()+getButtonHeight()/2+5, buttonWidth-25);
 
     }
 

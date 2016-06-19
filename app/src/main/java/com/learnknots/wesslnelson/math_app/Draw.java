@@ -15,11 +15,19 @@ public class Draw {
     public void Draw() {}
 
 
-    public void displayText(Canvas canvas, String text, int xCoord, int yCoord, int width) {
+    public void displayTextbyWidth(Canvas canvas, String text, int xCoord, int yCoord, int width) {
         if (canvas != null && text != null) {
             Paint paint = new Paint();
             paint.setARGB(255, 255, 255, 255);
             setTextSizeForWidth(paint, width, text);
+            canvas.drawText(text, xCoord, yCoord, paint);
+        }
+    }
+
+    public void displayText(Canvas canvas, String text, int xCoord, int yCoord) {
+        if (canvas != null && text != null) {
+            Paint paint = new Paint();
+            paint.setARGB(255, 255, 255, 255);
             canvas.drawText(text, xCoord, yCoord, paint);
         }
     }

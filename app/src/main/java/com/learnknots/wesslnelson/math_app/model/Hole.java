@@ -19,7 +19,12 @@ public class Hole {
 
     private boolean empty;    // true if there is nothing in the hole
 
-    public Hole() {}
+    private String containedMessage; // the message of the draggable that a hole might contain
+
+    public Hole() {
+        empty = true;
+        containedMessage = null;
+    }
 
     public int getX() {
         return x;
@@ -56,6 +61,21 @@ public class Hole {
         this.empty = empty;
     }
 
+    public int getCenterX() {
+        return x+getWidth()/2;
+    }
+    public int getCenterY() {
+        return y+getHeight()/2;
+    }
 
+    public void setContainedMessage(String message) {
+        containedMessage = message;
+    }
+    public String getContainedMessage() {
+        return containedMessage;
+    }
+    public Boolean hasMessage() {
+        return (containedMessage != null);
+    }
 
 }
