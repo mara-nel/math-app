@@ -30,7 +30,8 @@ public class PuzzleScreen {
     public PuzzleScreen( Context context) {
 
         draw = new Draw();
-        firstCoin = new Coin(300,300,60, "+");
+        firstCoin = new Coin(BitmapFactory.decodeResource(context.getResources(),
+                R.drawable.coin_plus), 300,300, "+");
         firstDie  = new Die( BitmapFactory.decodeResource(context.getResources(),
                 R.drawable.die_1), 300,100, 1);
         firstSHole = new SquareHole( BitmapFactory.decodeResource(context.getResources(),
@@ -41,9 +42,9 @@ public class PuzzleScreen {
 
     public void render(Canvas canvas) {
         draw.displayTextbyWidth(canvas, "testing", 100, 100, 100);
-        firstSHole.render(canvas); // draw holes first, otherwise dice would be under the hole
+        // draw holes first, otherwise dice would be under the hole
+        firstSHole.render(canvas);
         firstCHole.render(canvas);
-
 
 
         firstCoin.render(canvas);
@@ -52,14 +53,16 @@ public class PuzzleScreen {
         if (firstSHole.hasMessage()) {
             draw.displayText(canvas, firstSHole.getContainedMessage(), 100, 200);
         }
+        if (firstCHole.hasMessage()) {
+            draw.displayText(canvas, firstCHole.getContainedMessage(), 100, 210);
+        }
 
     }
 
     public void update() {
 
     }
-
-
+    
 
     public void onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {

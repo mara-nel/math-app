@@ -1,5 +1,8 @@
 package com.learnknots.wesslnelson.math_app.model;
 
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.util.Log;
 
 /**
@@ -20,6 +23,8 @@ public class Draggable {
     private int height;     // height of the draggable object
     private String message; // message, what is often displayed inside drawn object
 
+    private Bitmap bitmap;  // the bitmap of the draggable object
+
     private boolean touched; // true if the draggable is touched/picked up
 
 
@@ -39,6 +44,7 @@ public class Draggable {
         this.width = 0;
         this.height = 0;
         this.message = null;
+        this.bitmap = null;
     }
 
     public void setX(int x) {
@@ -83,6 +89,14 @@ public class Draggable {
         this.message = message;
     }
 
+    public Bitmap getBitmap() {
+        return bitmap;
+    }
+    public void setBitmap(Bitmap bitmap) {
+        this.bitmap = bitmap;
+    }
+
+
     public void handleActionDown(int eventX, int eventY) {
         if (eventY >= (y) && (eventY <= (y + height))) {
             if (eventX >= (x) && (eventX <= (x + width))) {
@@ -93,6 +107,15 @@ public class Draggable {
             }
         } else {
             setTouched(false);
+        }
+    }
+
+
+    public void render(Canvas canvas) {
+        if (canvas != null) {
+            Rect sourceRect = new Rect(0, 0, getWidth(), getHeight());
+            Rect destRect = new Rect(getX(), getY(), getX() + getWidth(), getY() + getWidth());
+            canvas.drawBitmap(getBitmap(), sourceRect, destRect, null);
         }
     }
 
