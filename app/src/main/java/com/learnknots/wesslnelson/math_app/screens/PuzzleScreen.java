@@ -25,20 +25,21 @@ public class PuzzleScreen {
 
     private static final String TAG = PuzzleScreen.class.getSimpleName();
 
-    private Draw draw;
-    private Coin firstCoin;
-    private Die  firstDie;
-    private SquareHole firstSHole;
-    private CircleHole firstCHole;
-    private List<Die> diceList;
-    private List<SquareHole> sHoleList;
-    private DiceManager diceManager;
-    private Context context;
+    private Draw draw;                      // used for easy access to drawing functions
+    private Coin firstCoin;                 // a single coin, will be deprecated
+    private CircleHole firstCHole;          // a single hole, will be deprecated
+    private List<Die> diceList;             // a list of dice
+    private List<SquareHole> sHoleList;     // a list of square holes
+    private DiceManager diceManager;        // a class with useful functions for managing dice
+    private Context context;                // a context so that resources can be referenced
+
+    private int result;                     // the result of the die and operator combo
 
 
     public PuzzleScreen( Context context) {
         this.context = context;
         diceManager = new DiceManager(context);
+        result = -9999;
 
         draw = new Draw();
         firstCoin = new Coin(BitmapFactory.decodeResource(context.getResources(),
@@ -49,16 +50,13 @@ public class PuzzleScreen {
 
         sHoleList = makeSHoles();
 
-        firstDie = diceManager.getRandomDie();
-        firstDie.setCenter(300, 100);
-        firstSHole = new SquareHole( BitmapFactory.decodeResource(context.getResources(),
-                R.drawable.square_hole64), 100, 500);
+
+
         firstCHole = new CircleHole( BitmapFactory.decodeResource(context.getResources(),
                 R.drawable.circle_hole), 200, 500);
     }
 
     public void render(Canvas canvas) {
-        draw.displayTextbyWidth(canvas, "testing", 100, 100, 100);
         // draw holes first, otherwise dice would be under the hole
         for (SquareHole shole: sHoleList) {
             shole.render(canvas);
@@ -84,6 +82,10 @@ public class PuzzleScreen {
         if (sHoleList.get(1).hasMessage()) {
             draw.displayText(canvas, sHoleList.get(1).getContainedMessage(), 100, 220);
         }
+        if (result != -9999 ) {
+            draw.displayText(canvas, "=", 100, 230);
+            draw.displayText(canvas, Integer.toString(result), 100, 240);
+        }
 
     }
 
@@ -101,6 +103,14 @@ public class PuzzleScreen {
                 shole.setEmpty(true);
                 shole.setContainedMessage(null);
             }
+        }
+
+        //calculates the result, only works if all holes are full
+        if (areAllHolesFilled()) {
+            int num1 = Integer.parseInt(sHoleList.get(0).getContainedMessage());
+            int num2 = Integer.parseInt(sHoleList.get(1).getContainedMessage());
+            // figure out the result of the first bin op
+            result = doBinaryOperation(firstCHole.getContainedMessage(), num1, num2);
         }
     }
     
@@ -151,8 +161,10 @@ public class PuzzleScreen {
         List<Die> dList = new ArrayList<Die>();
         dList.add(diceManager.getRandomDie());
         dList.add(diceManager.getRandomDie());
-        dList.get(0).setCenter(300,150);
-        dList.get(1).setCenter(300,200);
+        dList.add(diceManager.getRandomDie());
+        dList.get(0).setCenter(100,100);
+        dList.get(1).setCenter(200,100);
+        dList.get(2).setCenter(300,100);
 
         return dList;
 
@@ -167,4 +179,37 @@ public class PuzzleScreen {
 
         return shList;
     }
+
+    // returns true if all holes have an object in it
+    private boolean areAllHolesFilled() {
+        // this counter will be added to whenever a hole is empty
+        // if at the end of everything its still 0 then all holes are filled
+        int countEmpty = 0;
+        for (SquareHole squareHole: sHoleList) {
+            if (squareHole.isEmpty()) {
+                countEmpty += 1;
+            }
+        }
+        if (firstCHole.isEmpty()) {
+            countEmpty += 1;
+        }
+
+        if (countEmpty == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // figures out which bin op to use (based off of the string of it)
+    // and returns that op done with the two inputted numbers
+    // returns int for now (but might need to change)
+    private int doBinaryOperation(String binOpString, int num1, int num2) {
+        if (binOpString == "+") {
+            return num1 + num2;
+        } else {
+            return -9999;
+        }
+    }
+
 }
