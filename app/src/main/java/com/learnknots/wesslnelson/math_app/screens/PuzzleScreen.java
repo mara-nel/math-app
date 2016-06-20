@@ -26,9 +26,9 @@ public class PuzzleScreen {
     private static final String TAG = PuzzleScreen.class.getSimpleName();
 
     private Draw draw;                      // used for easy access to drawing functions
-    private Coin firstCoin;                 // a single coin, will be deprecated
     private CircleHole firstCHole;          // a single hole, will be deprecated
     private List<Die> diceList;             // a list of dice
+    private List<Coin> coinList;            // a list of coins
     private List<SquareHole> sHoleList;     // a list of square holes
     private DiceManager diceManager;        // a class with useful functions for managing dice
     private Context context;                // a context so that resources can be referenced
@@ -42,11 +42,9 @@ public class PuzzleScreen {
         result = -9999;
 
         draw = new Draw();
-        firstCoin = new Coin(BitmapFactory.decodeResource(context.getResources(),
-                R.drawable.coin_plus), 300,300, "+");
-
 
         diceList = makeDice();
+        coinList = makeCoins();
 
         sHoleList = makeSHoles();
 
@@ -61,15 +59,16 @@ public class PuzzleScreen {
         for (SquareHole shole: sHoleList) {
             shole.render(canvas);
         }
-        //firstSHole.render(canvas);
         firstCHole.render(canvas);
 
-
-        firstCoin.render(canvas);
 
         for (Die die: diceList) {
             die.render(canvas);
         }
+        for (Coin coin: coinList) {
+            coin.render(canvas);
+        }
+
 
 
         // just for some looksie  ie not permanent
@@ -93,16 +92,28 @@ public class PuzzleScreen {
 
         // sets a hole to empty if necessary
         for (SquareHole shole: sHoleList) {
-            int counter = 0;
+
+            int numDiceInHole = 0;
+
             for (Die die : diceList) {
                 if (shole.dieOverlaps(die)) {
-                    counter += 1;
+                    numDiceInHole += 1;
                 }
             }
-            if (counter == 0) {
+            if (numDiceInHole == 0) { // means no dice are in it
                 shole.setEmpty(true);
                 shole.setContainedMessage(null);
             }
+        }
+        int numCoinsInHole = 0;
+        for (Coin coin : coinList) {
+            if (firstCHole.coinOverlaps(coin)) {
+                numCoinsInHole += 1;
+            }
+        }
+        if (numCoinsInHole == 0) { // means no coins in it
+            firstCHole.setEmpty(true);
+            firstCHole.setContainedMessage(null);
         }
 
         //calculates the result, only works if all holes are full
@@ -120,15 +131,14 @@ public class PuzzleScreen {
             for (Die die: diceList) {
                 die.handleActionDown((int) event.getX(), (int) event.getY());
             }
-
-            firstCoin.handleActionDown((int) event.getX(), (int) event.getY());
+            for (Coin coin: coinList) {
+                coin.handleActionDown((int) event.getX(), (int) event.getY());
+            }
         }
         if (event.getAction() == MotionEvent.ACTION_MOVE) {
-            if(firstCoin.isTouched()) {
-                firstCoin.setCenterCoord((int)event.getX(), (int)event.getY());
-                if (!firstCHole.coinOverlaps(firstCoin)) {
-                    firstCHole.setEmpty(true);
-                    firstCHole.setContainedMessage(null);
+            for (Coin coin: coinList) {
+                if (coin.isTouched()) {
+                    coin.setCenterCoord((int) event.getX(), (int) event.getY());
                 }
             }
 
@@ -140,9 +150,11 @@ public class PuzzleScreen {
 
         } if (event.getAction() == MotionEvent.ACTION_UP) {
             // touch was released
-            if (firstCoin.isTouched()) {
-                firstCoin.setTouched(false);
-                firstCHole.snapIfClose(firstCoin);
+            for (Coin coin: coinList) {
+                if (coin.isTouched()) {
+                    coin.setTouched(false);
+                    firstCHole.snapIfClose(coin);
+                }
             }
             for (Die die: diceList) {
                 if (die.isTouched()) {
@@ -168,6 +180,16 @@ public class PuzzleScreen {
 
         return dList;
 
+    }
+
+    private List<Coin> makeCoins() {
+        List<Coin> cList = new ArrayList<Coin>();
+        cList.add( new Coin(BitmapFactory.decodeResource(context.getResources(),
+                R.drawable.coin_plus), 100,200, "+") );
+        cList.add( new Coin(BitmapFactory.decodeResource(context.getResources(),
+                R.drawable.coin_mult), 200,200, "*"));
+
+        return cList;
     }
 
     private List<SquareHole> makeSHoles() {
@@ -207,6 +229,8 @@ public class PuzzleScreen {
     private int doBinaryOperation(String binOpString, int num1, int num2) {
         if (binOpString == "+") {
             return num1 + num2;
+        } else if (binOpString == "*"){
+            return num1 * num2;
         } else {
             return -9999;
         }
