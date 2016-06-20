@@ -62,28 +62,30 @@ public class PuzzleScreen {
         firstCHole.render(canvas);
 
 
-        for (Die die: diceList) {
-            die.render(canvas);
-        }
+
         for (Coin coin: coinList) {
             coin.render(canvas);
         }
+        for (Die die: diceList) {
+            die.render(canvas);
+        }
+
 
 
 
         // just for some looksie  ie not permanent
         if (sHoleList.get(0).hasMessage()) {
-            draw.displayText(canvas, sHoleList.get(0).getContainedMessage(), 100, 200);
+            draw.displayText(canvas, sHoleList.get(0).getContainedMessage(), 50, 200);
         }
         if (firstCHole.hasMessage()) {
-            draw.displayText(canvas, firstCHole.getContainedMessage(), 100, 210);
+            draw.displayText(canvas, firstCHole.getContainedMessage(), 50, 210);
         }
         if (sHoleList.get(1).hasMessage()) {
-            draw.displayText(canvas, sHoleList.get(1).getContainedMessage(), 100, 220);
+            draw.displayText(canvas, sHoleList.get(1).getContainedMessage(), 50, 220);
         }
         if (result != -9999 ) {
-            draw.displayText(canvas, "=", 100, 230);
-            draw.displayText(canvas, Integer.toString(result), 100, 240);
+            draw.displayText(canvas, "=", 50, 230);
+            draw.displayText(canvas, Integer.toString(result), 50, 240);
         }
 
     }
@@ -188,6 +190,8 @@ public class PuzzleScreen {
                 R.drawable.coin_plus), 100,200, "+") );
         cList.add( new Coin(BitmapFactory.decodeResource(context.getResources(),
                 R.drawable.coin_mult), 200,200, "*"));
+        cList.add( new Coin(BitmapFactory.decodeResource(context.getResources(),
+                R.drawable.coin_minus), 300,200, "-"));
 
         return cList;
     }
@@ -231,6 +235,8 @@ public class PuzzleScreen {
             return num1 + num2;
         } else if (binOpString == "*"){
             return num1 * num2;
+        } else if (binOpString == "-"){
+            return num1 - num2;
         } else {
             return -9999;
         }
