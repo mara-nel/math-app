@@ -105,7 +105,7 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
     }
 
     public void update() {
-
+        puzzleScreen.update();
     }
 
 

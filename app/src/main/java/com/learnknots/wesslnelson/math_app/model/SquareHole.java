@@ -54,4 +54,5 @@ public class SquareHole extends Hole {
         return false;
     }
 
+
 }

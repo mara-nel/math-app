@@ -11,6 +11,7 @@ import com.learnknots.wesslnelson.math_app.Draw;
 public class Die extends Draggable{
 
     private Draw draw;
+    private int number;
 
     public Die(Bitmap bitmap, int x, int y, int number) {
         setBitmap(bitmap);
@@ -20,6 +21,7 @@ public class Die extends Draggable{
         setHeight(bitmap.getHeight());
         setMessage(Integer.toString(number));
 
+        this.number = number;
         draw = new Draw();
     }
 
@@ -32,6 +34,13 @@ public class Die extends Draggable{
     }
     public int getCenterY(){
         return getY()+getHeight()/2;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+    public void setNumber(int number) {
+        this.number = number;
     }
 
 }
