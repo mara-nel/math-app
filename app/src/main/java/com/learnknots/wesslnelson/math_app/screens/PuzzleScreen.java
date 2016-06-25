@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 
 import com.learnknots.wesslnelson.math_app.Draw;
+import com.learnknots.wesslnelson.math_app.GameMath;
 import com.learnknots.wesslnelson.math_app.R;
 import com.learnknots.wesslnelson.math_app.model.CircleHole;
 import com.learnknots.wesslnelson.math_app.model.Coin;
@@ -31,15 +32,24 @@ public class PuzzleScreen {
     private List<Coin> coinList;            // a list of coins
     private List<SquareHole> sHoleList;     // a list of square holes
     private DiceManager diceManager;        // a class with useful functions for managing dice
+    private GameMath gameMath;              // a class with math related functions
     private Context context;                // a context so that resources can be referenced
 
+    private int goal;                       // the number the player wants to get close to
     private int result;                     // the result of the die and operator combo
+    private int closestPossible;            // the closest possible result based off of whats given
 
+    private Boolean isCarrying;             // true if something is being carried/touched
+    private Boolean hasWon;                 // true if player has entered a winning solution
 
     public PuzzleScreen( Context context) {
         this.context = context;
+        isCarrying = false;
+        hasWon = false;
+        gameMath = new GameMath();
         diceManager = new DiceManager(context);
         result = -9999;
+        goal = gameMath.rndInt(1,15);
 
         draw = new Draw();
 
@@ -49,9 +59,17 @@ public class PuzzleScreen {
         sHoleList = makeSHoles();
 
 
-
         firstCHole = new CircleHole( BitmapFactory.decodeResource(context.getResources(),
                 R.drawable.circle_hole), 200, 500);
+
+
+        //just trying something out
+        //List<Coin> cList = new ArrayList<Coin>();
+        String[] ops = {"+", "-", "*"};
+        //int[] diceNums = {1,3,5};
+        int[] diceNums = diceManager.getDiceNumbers(diceList);
+        closestPossible  = gameMath.getClosestSolution(ops, diceNums, goal );
+        Log.d(TAG, Integer.toString(closestPossible));
     }
 
     public void render(Canvas canvas) {
@@ -88,6 +106,11 @@ public class PuzzleScreen {
             draw.displayText(canvas, Integer.toString(result), 50, 240);
         }
 
+        draw.displayText(canvas, Integer.toString(goal), 50, 280);
+
+        if (hasWon) {
+            draw.displayTextbyWidth(canvas, "WINNER", 125, 350, 250);
+        }
     }
 
     public void update() {
@@ -123,19 +146,34 @@ public class PuzzleScreen {
             int num1 = Integer.parseInt(sHoleList.get(0).getContainedMessage());
             int num2 = Integer.parseInt(sHoleList.get(1).getContainedMessage());
             // figure out the result of the first bin op
-            result = doBinaryOperation(firstCHole.getContainedMessage(), num1, num2);
+            result = gameMath.doBinaryOperation(firstCHole.getContainedMessage(), num1, num2);
+        }
+
+        if (Math.abs(goal-result) == closestPossible) {
+            hasWon = true;
         }
     }
     
 
     public void onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            for (Die die: diceList) {
-                die.handleActionDown((int) event.getX(), (int) event.getY());
+            for (Die die : diceList) {
+                if (!isCarrying) {
+                    die.handleActionDown((int) event.getX(), (int) event.getY());
+                    if (die.isTouched()) {
+                        isCarrying = true;
+                    }
+                }
             }
-            for (Coin coin: coinList) {
-                coin.handleActionDown((int) event.getX(), (int) event.getY());
+            for (Coin coin : coinList) {
+                if (!isCarrying) {
+                    coin.handleActionDown((int) event.getX(), (int) event.getY());
+                    if (coin.isTouched()) {
+                        isCarrying = true;
+                    }
+                }
             }
+
         }
         if (event.getAction() == MotionEvent.ACTION_MOVE) {
             for (Coin coin: coinList) {
@@ -166,6 +204,8 @@ public class PuzzleScreen {
                     }
                 }
             }
+
+            isCarrying = false;
 
         }
     }
@@ -227,19 +267,7 @@ public class PuzzleScreen {
         }
     }
 
-    // figures out which bin op to use (based off of the string of it)
-    // and returns that op done with the two inputted numbers
-    // returns int for now (but might need to change)
-    private int doBinaryOperation(String binOpString, int num1, int num2) {
-        if (binOpString == "+") {
-            return num1 + num2;
-        } else if (binOpString == "*"){
-            return num1 * num2;
-        } else if (binOpString == "-"){
-            return num1 - num2;
-        } else {
-            return -9999;
-        }
-    }
+
+
 
 }
