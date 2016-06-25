@@ -35,9 +35,11 @@ public class PuzzleScreen {
 
     private int result;                     // the result of the die and operator combo
 
+    private Boolean isCarrying;             // true if something is being carried/touched
 
     public PuzzleScreen( Context context) {
         this.context = context;
+        isCarrying = false;
         diceManager = new DiceManager(context);
         result = -9999;
 
@@ -47,7 +49,6 @@ public class PuzzleScreen {
         coinList = makeCoins();
 
         sHoleList = makeSHoles();
-
 
 
         firstCHole = new CircleHole( BitmapFactory.decodeResource(context.getResources(),
@@ -130,12 +131,23 @@ public class PuzzleScreen {
 
     public void onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            for (Die die: diceList) {
-                die.handleActionDown((int) event.getX(), (int) event.getY());
+            for (Die die : diceList) {
+                if (!isCarrying) {
+                    die.handleActionDown((int) event.getX(), (int) event.getY());
+                    if (die.isTouched()) {
+                        isCarrying = true;
+                    }
+                }
             }
-            for (Coin coin: coinList) {
-                coin.handleActionDown((int) event.getX(), (int) event.getY());
+            for (Coin coin : coinList) {
+                if (!isCarrying) {
+                    coin.handleActionDown((int) event.getX(), (int) event.getY());
+                    if (coin.isTouched()) {
+                        isCarrying = true;
+                    }
+                }
             }
+
         }
         if (event.getAction() == MotionEvent.ACTION_MOVE) {
             for (Coin coin: coinList) {
@@ -166,6 +178,8 @@ public class PuzzleScreen {
                     }
                 }
             }
+
+            isCarrying = false;
 
         }
     }
