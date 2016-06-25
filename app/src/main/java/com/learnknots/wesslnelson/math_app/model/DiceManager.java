@@ -7,6 +7,8 @@ import android.graphics.BitmapFactory;
 
 import com.learnknots.wesslnelson.math_app.R;
 
+import java.util.List;
+
 /**
  * Created by wesslnelson on 6/19/16.
  */
@@ -32,6 +34,17 @@ public class DiceManager {
     static int rndInt(int min, int max) {
         return (int) (min + Math.random() * (max - min + 1));
     }
+
+    // returns an int[] containing the numbers of each die
+    public int[] getDiceNumbers(List<Die> dieList) {
+        int[] dieNumbers = new int[dieList.size()];
+        for (int x=0; x<dieList.size(); x++) {
+            dieNumbers[x] = dieList.get(x).getNumber();
+        }
+
+        return dieNumbers;
+    }
+
 
 
     // returns the 6 die if a number outside of 1-6 is chosen
