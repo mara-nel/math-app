@@ -15,6 +15,7 @@ import com.learnknots.wesslnelson.math_app.model.Coin;
 import com.learnknots.wesslnelson.math_app.model.DiceManager;
 import com.learnknots.wesslnelson.math_app.model.Die;
 import com.learnknots.wesslnelson.math_app.model.SquareHole;
+import com.learnknots.wesslnelson.math_app.model.TextButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +35,7 @@ public class PuzzleScreen {
     private DiceManager diceManager;        // a class with useful functions for managing dice
     private GameMath gameMath;              // a class with math related functions
     private Context context;                // a context so that resources can be referenced
+    private TextButton replayButton;        // a button that when clicked starts everything over
 
     private int goal;                       // the number the player wants to get close to
     private int result;                     // the result of the die and operator combo
@@ -49,7 +51,9 @@ public class PuzzleScreen {
         gameMath = new GameMath();
         diceManager = new DiceManager(context);
         result = -9999;
-        goal = gameMath.rndInt(1,15);
+        goal = gameMath.rndInt(1,20);
+
+        replayButton = new TextButton("Play Again", 200, 600, 200, 75);
 
         draw = new Draw();
 
@@ -65,7 +69,7 @@ public class PuzzleScreen {
 
         //just trying something out
         //List<Coin> cList = new ArrayList<Coin>();
-        String[] ops = {"+", "-", "*"};
+        String[] ops = {"+", "-", "*", "^", "%"};
         //int[] diceNums = {1,3,5};
         int[] diceNums = diceManager.getDiceNumbers(diceList);
         closestPossible  = gameMath.getClosestSolution(ops, diceNums, goal );
@@ -80,15 +84,12 @@ public class PuzzleScreen {
         firstCHole.render(canvas);
 
 
-
         for (Coin coin: coinList) {
             coin.render(canvas);
         }
         for (Die die: diceList) {
             die.render(canvas);
         }
-
-
 
 
         // just for some looksie  ie not permanent
@@ -110,6 +111,7 @@ public class PuzzleScreen {
 
         if (hasWon) {
             draw.displayTextbyWidth(canvas, "WINNER", 125, 450, 250);
+            replayButton.draw(canvas);
         }
     }
 
@@ -152,26 +154,40 @@ public class PuzzleScreen {
         if (Math.abs(goal-result) == closestPossible) {
             hasWon = true;
         }
+        if (replayButton.isClicked()) {
+            hasWon = false;
+            diceList = makeDice();
+            replayButton.setClicked(false);
+            result = -9999;
+            goal = gameMath.rndInt(1,20);
+            String[] ops = {"+", "-", "*", "^", "%"};
+            int[] diceNums = diceManager.getDiceNumbers(diceList);
+            closestPossible  = gameMath.getClosestSolution(ops, diceNums, goal );
+        }
     }
     
 
     public void onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            for (Die die : diceList) {
-                if (!isCarrying) {
-                    die.handleActionDown((int) event.getX(), (int) event.getY());
-                    if (die.isTouched()) {
-                        isCarrying = true;
+            if (!hasWon) {
+                for (Die die : diceList) {
+                    if (!isCarrying) {
+                        die.handleActionDown((int) event.getX(), (int) event.getY());
+                        if (die.isTouched()) {
+                            isCarrying = true;
+                        }
                     }
                 }
-            }
-            for (Coin coin : coinList) {
-                if (!isCarrying) {
-                    coin.handleActionDown((int) event.getX(), (int) event.getY());
-                    if (coin.isTouched()) {
-                        isCarrying = true;
+                for (Coin coin : coinList) {
+                    if (!isCarrying) {
+                        coin.handleActionDown((int) event.getX(), (int) event.getY());
+                        if (coin.isTouched()) {
+                            isCarrying = true;
+                        }
                     }
                 }
+            } else {
+                replayButton.handleActionDown((int) event.getX(), (int) event.getY());
             }
 
         }
