@@ -52,8 +52,12 @@ public class GameMath {
             return num1 + num2;
         } else if (binOpString == "*"){
             return num1 * num2;
-        } else if (binOpString == "-"){
+        } else if (binOpString == "-") {
             return num1 - num2;
+        } else if (binOpString == "^") {
+            return num1 ^ num2;
+        } else if (binOpString == "%") {
+            return num1%num2;
         } else {
             return -9999;
         }

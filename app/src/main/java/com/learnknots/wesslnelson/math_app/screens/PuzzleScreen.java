@@ -109,7 +109,7 @@ public class PuzzleScreen {
         draw.displayText(canvas, Integer.toString(goal), 50, 280);
 
         if (hasWon) {
-            draw.displayTextbyWidth(canvas, "WINNER", 125, 350, 250);
+            draw.displayTextbyWidth(canvas, "WINNER", 125, 450, 250);
         }
     }
 
@@ -232,7 +232,10 @@ public class PuzzleScreen {
                 R.drawable.coin_mult), 200,200, "*"));
         cList.add( new Coin(BitmapFactory.decodeResource(context.getResources(),
                 R.drawable.coin_minus), 300,200, "-"));
-
+        cList.add( new Coin(BitmapFactory.decodeResource(context.getResources(),
+                R.drawable.coin_exp), 150,275, "^"));
+        cList.add( new Coin(BitmapFactory.decodeResource(context.getResources(),
+                R.drawable.coin_mod), 250,275, "%"));
         return cList;
     }
 
