@@ -37,12 +37,15 @@ public class PuzzleScreen {
 
     private int goal;                       // the number the player wants to get close to
     private int result;                     // the result of the die and operator combo
+    private int closestPossible;            // the closest possible result based off of whats given
 
     private Boolean isCarrying;             // true if something is being carried/touched
+    private Boolean hasWon;                 // true if player has entered a winning solution
 
     public PuzzleScreen( Context context) {
         this.context = context;
         isCarrying = false;
+        hasWon = false;
         gameMath = new GameMath();
         diceManager = new DiceManager(context);
         result = -9999;
@@ -65,8 +68,8 @@ public class PuzzleScreen {
         String[] ops = {"+", "-", "*"};
         //int[] diceNums = {1,3,5};
         int[] diceNums = diceManager.getDiceNumbers(diceList);
-        int closest  = gameMath.getClosestSolution(ops, diceNums, goal );
-        Log.d(TAG, Integer.toString(closest));
+        closestPossible  = gameMath.getClosestSolution(ops, diceNums, goal );
+        Log.d(TAG, Integer.toString(closestPossible));
     }
 
     public void render(Canvas canvas) {
@@ -104,6 +107,10 @@ public class PuzzleScreen {
         }
 
         draw.displayText(canvas, Integer.toString(goal), 50, 280);
+
+        if (hasWon) {
+            draw.displayTextbyWidth(canvas, "WINNER", 125, 350, 250);
+        }
     }
 
     public void update() {
@@ -140,6 +147,10 @@ public class PuzzleScreen {
             int num2 = Integer.parseInt(sHoleList.get(1).getContainedMessage());
             // figure out the result of the first bin op
             result = gameMath.doBinaryOperation(firstCHole.getContainedMessage(), num1, num2);
+        }
+
+        if (Math.abs(goal-result) == closestPossible) {
+            hasWon = true;
         }
     }
     
