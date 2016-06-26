@@ -26,13 +26,19 @@ public class GameMath {
         int closestDistance = 9999;
 
         //gets all permutations of 2 of the included ints
-        List<int[]> possibilities = allPermutationsOf2(diceNumbers);
+        List<int[]> possNums = allPermutationsOf3(diceNumbers);
 
-        // iterates over all possible 2 die choices
-        for(int[] perm: possibilities) {
+        List<String[]> possOps = allPermutationsOf2(operations);
+
+        // ASSUMES PARENTHESES ARE ON THE LEFT
+        // iterates over all possible 3 die choices
+        for(int[] perm: possNums) {
             // iterates over each possible bin op
-            for (String op: operations) {
-                int result = doBinaryOperation(op, perm[0], perm[1]);
+            for (String[] op: possOps) {
+                // assumes left op is first op
+                int midresult = doBinaryOperation(op[0], perm[0], perm[1]);
+                // assumes midresult is on the left
+                int result = doBinaryOperation(op[1], midresult, perm[2]);
                 int distance = Math.abs(goal-result);
                 if (distance < closestDistance) {
                     closestDistance = distance;
@@ -55,7 +61,7 @@ public class GameMath {
         } else if (binOpString == "-") {
             return num1 - num2;
         } else if (binOpString == "^") {
-            return num1 ^ num2;
+            return (int)Math.pow(num1,num2);
         } else if (binOpString == "%") {
             return num1%num2;
         } else {
@@ -84,14 +90,32 @@ public class GameMath {
     }
 
     // returns all perms of length 2, without replacement
-    private List<int[]> allPermutationsOf2(int[] nums) {
+    private List<String[]> allPermutationsOf2(String[] ops) {
+        List<String[]> result = new ArrayList<String[]>();
+
+        for (int x=0; x<ops.length; x++) {
+            for (int y=0; y<ops.length; y++) {
+                if (x!=y) {
+                    String[] perm = {ops[x], ops[y]};
+                    result.add(perm);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    // returns all perms of length 3, without replacement
+    private List<int[]> allPermutationsOf3(int[] nums) {
         List<int[]> result = new ArrayList<int[]>();
 
         for (int x=0; x<nums.length; x++) {
             for (int y=0; y<nums.length; y++) {
-                if (x!=y) {
-                    int[] perm = {nums[x], nums[y]};
-                    result.add(perm);
+                for (int z=0; z<nums.length; z++) {
+                    if (x!=y & y!=z & z!= x) {
+                        int[] perm = {nums[x], nums[y], nums[z]};
+                        result.add(perm);
+                    }
                 }
             }
         }

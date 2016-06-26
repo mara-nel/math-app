@@ -28,10 +28,10 @@ public class PuzzleScreen {
     private static final String TAG = PuzzleScreen.class.getSimpleName();
 
     private Draw draw;                      // used for easy access to drawing functions
-    private CircleHole firstCHole;          // a single hole, will be deprecated
     private List<Die> diceList;             // a list of dice
     private List<Coin> coinList;            // a list of coins
-    private List<SquareHole> sHoleList;     // a list of square holes
+    private List<SquareHole> sHoleList;     // a list of the square holes
+    private List<CircleHole> cHoleList;     // a list of the circle holes
     private DiceManager diceManager;        // a class with useful functions for managing dice
     private GameMath gameMath;              // a class with math related functions
     private Context context;                // a context so that resources can be referenced
@@ -47,42 +47,32 @@ public class PuzzleScreen {
     public PuzzleScreen( Context context) {
         this.context = context;
         isCarrying = false;
-        hasWon = false;
         gameMath = new GameMath();
         diceManager = new DiceManager(context);
-        result = -9999;
-        goal = gameMath.rndInt(1,20);
 
-        replayButton = new TextButton("Play Again", 200, 600, 200, 75);
+        replayButton = new TextButton("Play Again", 125, 725, 250, 75);
+
+        newRound();
 
         draw = new Draw();
 
-        diceList = makeDice();
-        coinList = makeCoins();
 
         sHoleList = makeSHoles();
-
-
-        firstCHole = new CircleHole( BitmapFactory.decodeResource(context.getResources(),
-                R.drawable.circle_hole), 200, 500);
-
-
-        //just trying something out
-        //List<Coin> cList = new ArrayList<Coin>();
-        String[] ops = {"+", "-", "*", "^", "%"};
-        //int[] diceNums = {1,3,5};
-        int[] diceNums = diceManager.getDiceNumbers(diceList);
-        closestPossible  = gameMath.getClosestSolution(ops, diceNums, goal );
-        Log.d(TAG, Integer.toString(closestPossible));
+        cHoleList = makeCHoles();
     }
 
     public void render(Canvas canvas) {
+        //testing drawing parenthesis
+        draw.displayTextbyWidth(canvas,")", 300,600,40);
+        draw.displayTextbyWidth(canvas,"(", 1,600,40);
+
         // draw holes first, otherwise dice would be under the hole
         for (SquareHole shole: sHoleList) {
             shole.render(canvas);
         }
-        firstCHole.render(canvas);
-
+        for (CircleHole chole: cHoleList) {
+            chole.render(canvas);
+        }
 
         for (Coin coin: coinList) {
             coin.render(canvas);
@@ -92,20 +82,6 @@ public class PuzzleScreen {
         }
 
 
-        // just for some looksie  ie not permanent
-        if (sHoleList.get(0).hasMessage()) {
-            draw.displayText(canvas, sHoleList.get(0).getContainedMessage(), 50, 200);
-        }
-        if (firstCHole.hasMessage()) {
-            draw.displayText(canvas, firstCHole.getContainedMessage(), 50, 210);
-        }
-        if (sHoleList.get(1).hasMessage()) {
-            draw.displayText(canvas, sHoleList.get(1).getContainedMessage(), 50, 220);
-        }
-        if (result != -9999 ) {
-            draw.displayText(canvas, "=", 50, 230);
-            draw.displayText(canvas, Integer.toString(result), 50, 240);
-        }
 
         draw.displayText(canvas, Integer.toString(goal), 50, 280);
 
@@ -119,9 +95,7 @@ public class PuzzleScreen {
 
         // sets a hole to empty if necessary
         for (SquareHole shole: sHoleList) {
-
             int numDiceInHole = 0;
-
             for (Die die : diceList) {
                 if (shole.dieOverlaps(die)) {
                     numDiceInHole += 1;
@@ -132,37 +106,37 @@ public class PuzzleScreen {
                 shole.setContainedMessage(null);
             }
         }
-        int numCoinsInHole = 0;
-        for (Coin coin : coinList) {
-            if (firstCHole.coinOverlaps(coin)) {
-                numCoinsInHole += 1;
+        for (CircleHole circleHole: cHoleList) {
+            int numCoinsInHole = 0;
+            for (Coin coin : coinList) {
+                if (circleHole.coinOverlaps(coin)) {
+                    numCoinsInHole += 1;
+                }
+            }
+            if (numCoinsInHole == 0) { // means no coins in it
+                circleHole.setEmpty(true);
+                circleHole.setContainedMessage(null);
             }
         }
-        if (numCoinsInHole == 0) { // means no coins in it
-            firstCHole.setEmpty(true);
-            firstCHole.setContainedMessage(null);
-        }
 
+        // ASSUMES PARENTHESES ARE ON THE LEFT
         //calculates the result, only works if all holes are full
         if (areAllHolesFilled()) {
             int num1 = Integer.parseInt(sHoleList.get(0).getContainedMessage());
             int num2 = Integer.parseInt(sHoleList.get(1).getContainedMessage());
+            int num3 = Integer.parseInt(sHoleList.get(2).getContainedMessage());
             // figure out the result of the first bin op
-            result = gameMath.doBinaryOperation(firstCHole.getContainedMessage(), num1, num2);
+            // currently assumes the parentheses are on the left
+            int midresult = gameMath.doBinaryOperation(getFirstOp(), num1, num2);
+            // still assumes that p's on left, will need to change this
+            result = gameMath.doBinaryOperation(getSecondOp(), midresult, num3);
         }
 
         if (Math.abs(goal-result) == closestPossible) {
             hasWon = true;
         }
         if (replayButton.isClicked()) {
-            hasWon = false;
-            diceList = makeDice();
-            replayButton.setClicked(false);
-            result = -9999;
-            goal = gameMath.rndInt(1,20);
-            String[] ops = {"+", "-", "*", "^", "%"};
-            int[] diceNums = diceManager.getDiceNumbers(diceList);
-            closestPossible  = gameMath.getClosestSolution(ops, diceNums, goal );
+            newRound();
         }
     }
     
@@ -185,6 +159,10 @@ public class PuzzleScreen {
                             isCarrying = true;
                         }
                     }
+                }
+
+                if (event.getY()>650) {
+                    organizeObjects();
                 }
             } else {
                 replayButton.handleActionDown((int) event.getX(), (int) event.getY());
@@ -209,7 +187,9 @@ public class PuzzleScreen {
             for (Coin coin: coinList) {
                 if (coin.isTouched()) {
                     coin.setTouched(false);
-                    firstCHole.snapIfClose(coin);
+                    for (CircleHole circleHole: cHoleList) {
+                        circleHole.snapIfClose(coin);
+                    }
                 }
             }
             for (Die die: diceList) {
@@ -232,9 +212,6 @@ public class PuzzleScreen {
         dList.add(diceManager.getRandomDie());
         dList.add(diceManager.getRandomDie());
         dList.add(diceManager.getRandomDie());
-        dList.get(0).setCenter(100,100);
-        dList.get(1).setCenter(200,100);
-        dList.get(2).setCenter(300,100);
 
         return dList;
 
@@ -252,17 +229,28 @@ public class PuzzleScreen {
                 R.drawable.coin_exp), 150,275, "^"));
         cList.add( new Coin(BitmapFactory.decodeResource(context.getResources(),
                 R.drawable.coin_mod), 250,275, "%"));
+
         return cList;
     }
 
     private List<SquareHole> makeSHoles() {
         List<SquareHole> shList = new ArrayList<SquareHole>();
         shList.add(new SquareHole( BitmapFactory.decodeResource(context.getResources(),
-                R.drawable.square_hole64), 100, 500));
+                R.drawable.square_hole64), 25, 500));
         shList.add(new SquareHole( BitmapFactory.decodeResource(context.getResources(),
-                R.drawable.square_hole64), 300, 500));
-
+                R.drawable.square_hole64), 200, 500));
+        shList.add(new SquareHole( BitmapFactory.decodeResource(context.getResources(),
+                R.drawable.square_hole64), 375, 500));
         return shList;
+    }
+
+    private List<CircleHole> makeCHoles() {
+        List<CircleHole> chList = new ArrayList<CircleHole>();
+        chList.add(new CircleHole( BitmapFactory.decodeResource(context.getResources(),
+                R.drawable.circle_hole), 120, 510));
+        chList.add(new CircleHole( BitmapFactory.decodeResource(context.getResources(),
+                R.drawable.circle_hole), 295, 510));
+        return chList;
     }
 
     // returns true if all holes have an object in it
@@ -275,8 +263,10 @@ public class PuzzleScreen {
                 countEmpty += 1;
             }
         }
-        if (firstCHole.isEmpty()) {
-            countEmpty += 1;
+        for (CircleHole circleHole: cHoleList) {
+            if (circleHole.isEmpty()) {
+                countEmpty += 1;
+            }
         }
 
         if (countEmpty == 0) {
@@ -286,7 +276,43 @@ public class PuzzleScreen {
         }
     }
 
+    // resets everything that would need to be reset in the case
+    // of starting a new round
+    private void newRound() {
+        hasWon = false;
+        diceList = makeDice();
+        organizeObjects();
+        replayButton.setClicked(false);
+        result = -9999;
+        goal = gameMath.rndInt(1,20);
+        String[] ops = {"+", "-", "*", "^", "%"}; // should be made not hard coded
+        int[] diceNums = diceManager.getDiceNumbers(diceList);
+        closestPossible  = gameMath.getClosestSolution(ops, diceNums, goal );
+        Log.d(TAG, "closest: "+closestPossible);
+    }
+
+    // returns the operation found in the coin hole
+    // that is contained by the parentheses
+    private String getFirstOp() {
+        // probably something that checks where parenth's are
+        // then act accordingly
+
+        // just assuming parenth's are on the left for now
+        return  cHoleList.get(0).getContainedMessage();
+    }
+
+    // assumes p's on left
+    private String getSecondOp() {
+        return  cHoleList.get(1).getContainedMessage();
+    }
 
 
+    // puts all the objects in the original spot
+    private void organizeObjects() {
+        coinList = makeCoins(); // just remake them
+        diceList.get(0).setCenter(100,100);
+        diceList.get(1).setCenter(200,100);
+        diceList.get(2).setCenter(300,100);
 
+    }
 }
