@@ -44,13 +44,30 @@ public class PuzzleScreen {
     private Boolean isCarrying;             // true if something is being carried/touched
     private Boolean hasWon;                 // true if player has entered a winning solution
 
+    private int coinRowY;                   // the y coordinate for where coins start
+
+    private int dieRowY;                    // the y coordinate for where dice start
+    private int dieRowX;                    // the x coordinate for first die
+    private int dieSpacing;                 // distance between left coord of one die and another
+
+    private int holeRowY;                   // the y coordinate for where holes go
+
     public PuzzleScreen( Context context) {
         this.context = context;
         isCarrying = false;
         gameMath = new GameMath();
         diceManager = new DiceManager(context);
 
-        replayButton = new TextButton("Play Again", 125, 725, 250, 75);
+        coinRowY = 350; // this should be determined by screen size or something
+
+        dieRowX = 100; // tsbdbss
+        dieRowY = 200; // this should be determined by screen size too
+        dieSpacing = 200; // tsbdbss
+
+        holeRowY = 700; // tsbdbss
+
+
+        replayButton = new TextButton("Play Again", 125, holeRowY+600, 250, 75);
 
         newRound();
 
@@ -83,10 +100,10 @@ public class PuzzleScreen {
 
 
 
-        draw.displayText(canvas, Integer.toString(goal), 50, 280);
+        draw.displayText(canvas, Integer.toString(goal), 50, 50);
 
         if (hasWon) {
-            draw.displayTextbyWidth(canvas, "WINNER", 125, 450, 250);
+            draw.displayTextbyWidth(canvas, "WINNER", 125, holeRowY+400, 250);
             replayButton.draw(canvas);
         }
     }
@@ -161,7 +178,8 @@ public class PuzzleScreen {
                     }
                 }
 
-                if (event.getY()>650) {
+                // if tap low enough, resets all dice and coins
+                if (event.getY()>holeRowY+200) {
                     organizeObjects();
                 }
             } else {
@@ -220,15 +238,15 @@ public class PuzzleScreen {
     private List<Coin> makeCoins() {
         List<Coin> cList = new ArrayList<Coin>();
         cList.add( new Coin(BitmapFactory.decodeResource(context.getResources(),
-                R.drawable.coin_plus), 100,200, "+") );
+                R.drawable.coin_plus), 100,coinRowY, "+") );
         cList.add( new Coin(BitmapFactory.decodeResource(context.getResources(),
-                R.drawable.coin_mult), 200,200, "*"));
+                R.drawable.coin_mult), 250,coinRowY, "*"));
         cList.add( new Coin(BitmapFactory.decodeResource(context.getResources(),
-                R.drawable.coin_minus), 300,200, "-"));
+                R.drawable.coin_minus), 400,coinRowY, "-"));
         cList.add( new Coin(BitmapFactory.decodeResource(context.getResources(),
-                R.drawable.coin_exp), 150,275, "^"));
+                R.drawable.coin_exp), 550,coinRowY, "^"));
         cList.add( new Coin(BitmapFactory.decodeResource(context.getResources(),
-                R.drawable.coin_mod), 250,275, "%"));
+                R.drawable.coin_mod), 700,coinRowY, "%"));
 
         return cList;
     }
@@ -236,20 +254,20 @@ public class PuzzleScreen {
     private List<SquareHole> makeSHoles() {
         List<SquareHole> shList = new ArrayList<SquareHole>();
         shList.add(new SquareHole( BitmapFactory.decodeResource(context.getResources(),
-                R.drawable.square_hole64), 25, 500));
+                R.drawable.square_hole64), 25, holeRowY));
         shList.add(new SquareHole( BitmapFactory.decodeResource(context.getResources(),
-                R.drawable.square_hole64), 200, 500));
+                R.drawable.square_hole64), 200, holeRowY));
         shList.add(new SquareHole( BitmapFactory.decodeResource(context.getResources(),
-                R.drawable.square_hole64), 375, 500));
+                R.drawable.square_hole64), 375, holeRowY));
         return shList;
     }
 
     private List<CircleHole> makeCHoles() {
         List<CircleHole> chList = new ArrayList<CircleHole>();
         chList.add(new CircleHole( BitmapFactory.decodeResource(context.getResources(),
-                R.drawable.circle_hole), 120, 510));
+                R.drawable.circle_hole), 120, holeRowY+10));
         chList.add(new CircleHole( BitmapFactory.decodeResource(context.getResources(),
-                R.drawable.circle_hole), 295, 510));
+                R.drawable.circle_hole), 295, holeRowY+10));
         return chList;
     }
 
@@ -310,9 +328,9 @@ public class PuzzleScreen {
     // puts all the objects in the original spot
     private void organizeObjects() {
         coinList = makeCoins(); // just remake them
-        diceList.get(0).setCenter(100,100);
-        diceList.get(1).setCenter(200,100);
-        diceList.get(2).setCenter(300,100);
+        diceList.get(0).setCenter(dieRowX, dieRowY);
+        diceList.get(1).setCenter(dieRowX+dieSpacing,dieRowY);
+        diceList.get(2).setCenter(dieRowX+(dieSpacing*2),dieRowY);
 
     }
 }
